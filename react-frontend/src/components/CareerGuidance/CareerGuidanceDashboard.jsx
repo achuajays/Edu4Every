@@ -1,50 +1,56 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Book, 
-  FileTextIcon, 
-  VideoIcon, 
-  CompassIcon 
+  UsersIcon, 
+  BarChartIcon, 
+  LightbulbIcon ,
+  BriefcaseIcon
 } from 'lucide-react';
 
-const StudentDashboard = () => {
-  // Retrieve the student's name from localStorage
-  const studentName = localStorage.getItem('studentName');
+const CareerGuidanceDashboard = () => {
+  // Retrieve the career guidance user's name from localStorage
+  const userName = localStorage.getItem('userName');
 
   const dashboardItems = [
+    { 
+        title: 'Career Guidance', 
+        description: 'Get personalized career advice and recommendations', 
+        link: '/dashboard/career-guidance', 
+        icon: BriefcaseIcon, 
+        color: 'bg-green-100 text-green-600' },
     {
-      title: 'Resume Builder',
-      description: 'Create a professional resume with AI assistance',
-      link: '/resume-builder',
-      icon: FileTextIcon,
+      title: 'Resume Review',
+      description: 'Have your resume reviewed by industry professionals',
+      link: '/resume-review',
+      icon: BarChartIcon,
+      color: 'bg-yellow-100 text-yellow-600'
+    },
+    {
+      title: 'Job Search Assistance',
+      description: 'Get help finding the right job opportunities',
+      link: '/job-search',
+      icon: UsersIcon,
       color: 'bg-blue-100 text-blue-600'
     },
     {
-      title: 'AI Consultation',
-      description: 'Schedule an AI-powered career consultation call',
-      link: '/call-feature',
-      icon: VideoIcon,
+      title: 'Interview Preparation',
+      description: 'Prepare for interviews with mock interviews and tips',
+      link: '/interview-preparation',
+      icon: LightbulbIcon,
       color: 'bg-purple-100 text-purple-600'
-    },
-    {
-      title: 'Learning Resources',
-      description: 'Access educational materials and study guides',
-      link: '/resources',
-      icon: Book,
-      color: 'bg-orange-100 text-orange-600'
     }
   ];
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="bg-white shadow-xl rounded-xl overflow-hidden">
-        {/* Navbar with student's name */}
-        <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6 flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-white">Student Dashboard</h1>
-          {/* Display student's name */}
-          {studentName && (
+        {/* Navbar with user's name */}
+        <div className="bg-gradient-to-r from-green-500 to-blue-600 p-6 flex justify-between items-center">
+          <h1 className="text-3xl font-bold text-white">Career Guidance Dashboard</h1>
+          {/* Display user's name */}
+          {userName && (
             <span className="text-white text-xl font-medium">
-              Welcome, {studentName}!
+              Welcome, {userName}!
             </span>
           )}
         </div>
@@ -71,7 +77,7 @@ const StudentDashboard = () => {
                   <div className="border-t p-4">
                     <Link 
                       to={item.link} 
-                      className="w-full block text-center bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors"
+                      className="w-full block text-center bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition-colors"
                     >
                       Access
                     </Link>
@@ -86,4 +92,4 @@ const StudentDashboard = () => {
   );
 };
 
-export default StudentDashboard;
+export default CareerGuidanceDashboard;

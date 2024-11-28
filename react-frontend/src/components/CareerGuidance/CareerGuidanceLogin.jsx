@@ -25,7 +25,7 @@ const CareerGuidanceLogin = () => {
           localStorage.setItem('userRole', 'career-guidance');
           localStorage.setItem('studentName', response.data.name);
           localStorage.setItem('Id', unique_id);
-          navigate('/dashboard/career-guidance');
+          navigate('/dashboard/career-guidance-dashboard');
         } else {
           setError('Invalid credentials. Please try again.');
         }

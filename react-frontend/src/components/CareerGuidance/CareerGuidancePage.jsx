@@ -39,7 +39,7 @@ const CareerGuidancePage = () => {
         <div className="bg-white shadow-xl rounded-xl p-6">
           <div className="flex items-center mb-6">
             <CompassIcon className="w-10 h-10 text-blue-500 mr-4" />
-            <h1 className="text-3xl font-bold text-gray-800">Career Guidance</h1>
+            <h1 className="text-3xl font-bold text-gray-800">Career RoadMap</h1>
           </div>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
