@@ -20,7 +20,7 @@ const StudentDashboard = () => {
   const dashboardItems = [
     {
       title: 'AI Learning',
-      description: 'Schedule an AI-powered career consultation call',
+      description: 'Schedule an AI-powered learning call, It will help student to learn more than what he learned manually and able to clear doubts.',
       link: '/call-feature',
       icon: VideoIcon,
       color: 'bg-purple-100 text-purple-600'
