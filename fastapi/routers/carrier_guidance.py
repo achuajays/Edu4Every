@@ -40,6 +40,7 @@ async def carrier_guidance_login(credentials: CarrierGuidance):
 
         # Return success response with carrier guidance's name
         if carrier_guidance_name:
+            print("Name: ", carrier_guidance_name)
             return {"status": "success", "message": "Logged in successfully", "name": carrier_guidance_name}
         else:
             raise HTTPException(status_code=404, detail="Carrier guidance not found")

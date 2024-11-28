@@ -20,9 +20,9 @@ class QuestionAnswerDict(BaseModel):
 def search_jobs(recommended_job: str):
     search_params = {
         "engine": "google_jobs",
-        "q": "barista new york",
+        "q": recommended_job,
         "hl": "en",
-        "api_key": "2788c64787d329ae4d1bd378f91e9889ff44f00a4be6e24ee896783ec062a521"
+        "api_key": os.getenv("serpapi_api"),
     }
 
     search = serpapi.search(search_params)

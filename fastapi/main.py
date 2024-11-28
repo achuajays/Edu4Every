@@ -7,6 +7,9 @@ from routers.resume import process_resume
 from routers.rag import router
 from routers.image_search import router as search_image
 from routers.writing_assistant import router as writing_assistant_router
+from routers.ai_note_maker import router as ai_note_maker
+from routers.ai_call_assistant import router as call_assistant
+from routers.ai_assiagment_correcter import router as ai_assiagment_correcter
 from cors import add_cors  # Import the CORS configuration
 
 app = FastAPI()
@@ -23,3 +26,6 @@ app.include_router(job_recommendation_router, prefix="/job_recommendation", tags
 app.include_router(router, prefix="/rag", tags=["RAG"])
 app.include_router(search_image, prefix="/search-image", tags=["Search Image"])
 app.include_router(writing_assistant_router, prefix="/writing_assistant", tags=["Writing Assistant"])
+app.include_router(ai_note_maker, prefix="/transcribe-audio", tags=["Transcribe Audio"])
+app.include_router(call_assistant, prefix="/initiate-call", tags=["Initiate Call"])
+app.include_router(ai_assiagment_correcter, prefix="/correct-ai-assiagment", tags=["Correct AI Assiagment"])

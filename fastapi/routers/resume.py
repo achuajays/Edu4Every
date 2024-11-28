@@ -49,19 +49,19 @@ async def process_carrier_guidance(input_data: CarrierGuidanceInput):
         print(results['organic_results'])
 
 
-        prompt = (
-            f"Analyze the following career guidance details:\n\n"
-            f"Name: {input_data.name}\n"
-            f"Email: {input_data.email}\n"
-            f"Phone: {input_data.phone}\n"
-            f"Education: {input_data.education}\n"
-            f"Degree: {input_data.degree}\n"
-            f"Skills: {input_data.skills}\n"
-            f"Experience: {input_data.experience}\n"
-            f"Projects: {input_data.projects}\n\n"
-            f"Job Title: {input_data.job_title}\n"
+        prompt = (f"""
+            Analyze the following career guidance details:\n\n
+            Name: {input_data.name}\n
+            Email: {input_data.email}\n
+            Phone: {input_data.phone}\n
+            Education: {input_data.education}\n
+            Degree: {input_data.degree}\n
+            Skills: {input_data.skills}\n
+            Experience: {input_data.experience}\n
+            Projects: {input_data.projects}\n\n
+            Job Title: {input_data.job_title}\n
             
-            f"Provide the 2 page Resume for the above details. you can refer the following job keywords for building resume: {results['organic_results'][0].title} , {results['organic_results'][1].title} , {results['organic_results'][2].title}"
+            Provide the 2 page Resume for the above details. you can refer the following job keywords for building resume: {results['organic_results'][0]["title"]} , {results['organic_results'][1]["title"]} , {results['organic_results'][2]["title"]}"""
         )
 
         # Call the Mistral model for inference
