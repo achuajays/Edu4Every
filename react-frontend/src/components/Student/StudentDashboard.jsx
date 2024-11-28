@@ -22,7 +22,7 @@ const StudentDashboard = () => {
     {
       title: 'Career Guidance',
       description: 'Get personalized career advice and recommendations',
-      link: '/career-guidance',
+      link: '/dashboard/career-guidance',
       icon: CompassIcon,
       color: 'bg-green-100 text-green-600'
     },

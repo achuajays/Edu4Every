@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AuthRoute from '../chat/AuthRoute';
 import { 
   ArrowRightIcon, 
   BookOpenIcon, 
@@ -49,6 +50,7 @@ const LandingPage = () => {
   const navigate = useNavigate();
   const userPathsRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const scrollToUserPaths = () => {
     userPathsRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -385,6 +387,21 @@ const LandingPage = () => {
           />
         </div>
       </section>
+      <button
+        className="fixed bottom-7 right-7 z-50 p-3 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-colors animate-bounce"
+        onClick={() => setIsChatOpen(!isChatOpen)}
+        aria-label="Chat with us"
+      >
+        <ChatBubbleLeftRightIcon className="h-8 w-8" />
+      </button>
+
+
+      {/* Chat Component */}
+      {isChatOpen && (
+        <div className="fixed bottom-[70px] right-[30px] z-[100] bg-white shadow-lg rounded-lg border border-black">
+          <AuthRoute onClose={() => setIsChatOpen(false)} />
+        </div>
+      )}
 
       {/* Footer */}
       <footer 

@@ -85,6 +85,7 @@ import CareerGuidanceDashboard from './components/CareerGuidance/CareerGuidanceP
 import CareerGuidanceLogin from './components/CareerGuidance/CareerGuidanceLogin'; // Added this import
 import CallFeaturePage from './components/Student/CallFeaturePage';
 import ResumeBuilderPage from './components/Student/ResumeBuilderPage';
+import CustomerService from './components/chat/CustomerService';
 
 function App() {
   return (
@@ -103,6 +104,7 @@ function App() {
           <Route path="/dashboard/student" element={<StudentDashboard />} />
           <Route path="/dashboard/teacher" element={<TeacherDashboard />} />
           <Route path="/dashboard/career-guidance" element={<CareerGuidanceDashboard />} />
+          <Route path="/dashboard/service-dashboard" element={<CustomerService />} />
           
           {/* Feature Routes */}
           <Route path="/call-feature" element={<CallFeaturePage />} />
