@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   Book, 
   FileTextIcon, 
@@ -8,8 +8,14 @@ import {
 } from 'lucide-react';
 
 const StudentDashboard = () => {
-  // Retrieve the student's name from localStorage
+  const navigate = useNavigate();
   const studentName = localStorage.getItem('studentName');
+
+  const handleLogout = () => {
+    // Clear localStorage and navigate to login page
+    localStorage.removeItem('studentName');
+    navigate('/login');
+  };
 
   const dashboardItems = [
     {
@@ -18,6 +24,13 @@ const StudentDashboard = () => {
       link: '/resume-builder',
       icon: FileTextIcon,
       color: 'bg-blue-100 text-blue-600'
+    },
+    {
+      title: 'Career Guidance',
+      description: 'Get personalized career advice and recommendations',
+      link: '/career-guidance',
+      icon: CompassIcon,
+      color: 'bg-green-100 text-green-600'
     },
     {
       title: 'AI Consultation',
@@ -38,15 +51,24 @@ const StudentDashboard = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="bg-white shadow-xl rounded-xl overflow-hidden">
-        {/* Navbar with student's name */}
+        {/* Navbar with student's name and logout button */}
         <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6 flex justify-between items-center">
           <h1 className="text-3xl font-bold text-white">Student Dashboard</h1>
-          {/* Display student's name */}
-          {studentName && (
-            <span className="text-white text-xl font-medium">
-              Welcome, {studentName}!
-            </span>
-          )}
+          <div className="flex items-center space-x-4">
+            {/* Display student's name */}
+            {studentName && (
+              <span className="text-white text-xl font-medium">
+                Welcome, {studentName}!
+              </span>
+            )}
+            {/* Logout Button */}
+            <button
+              onClick={handleLogout}
+              className="bg-white text-blue-600 font-semibold px-4 py-2 rounded-lg shadow hover:bg-gray-100 transition-all"
+            >
+              Logout
+            </button>
+          </div>
         </div>
 
         {/* Dashboard Items */}
