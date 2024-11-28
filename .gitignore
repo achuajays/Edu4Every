@@ -1,2 +1,5 @@
 .env
 .idea
+/fastapi/routers/__pycache__
+/fastapi/uploaded_pdfs
+/fastapi/__pycache__
