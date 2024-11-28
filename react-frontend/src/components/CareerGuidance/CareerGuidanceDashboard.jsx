@@ -1,15 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   UsersIcon, 
-  BarChartIcon, 
+  FileTextIcon, 
   LightbulbIcon ,
   BriefcaseIcon
 } from 'lucide-react';
 
 const CareerGuidanceDashboard = () => {
+const navigate = useNavigate();
   // Retrieve the career guidance user's name from localStorage
   const userName = localStorage.getItem('userName');
+
+  const handleLogout = () => {
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('studentName');
+    localStorage.removeItem('teacherName');
+    localStorage.removeItem('Id');
+    navigate('/');
+  };
 
   const dashboardItems = [
     { 
@@ -47,12 +56,20 @@ const CareerGuidanceDashboard = () => {
         {/* Navbar with user's name */}
         <div className="bg-gradient-to-r from-green-500 to-blue-600 p-6 flex justify-between items-center">
           <h1 className="text-3xl font-bold text-white">Career Guidance Dashboard</h1>
+          <div className="flex items-center space-x-4"></div>
           {/* Display user's name */}
           {userName && (
             <span className="text-white text-xl font-medium">
               Welcome, {userName}!
             </span>
           )}
+          <button
+              onClick={handleLogout}
+              className="bg-white text-blue-600 font-semibold px-4 py-2 rounded-lg shadow hover:bg-gray-100 transition-all"
+            >
+              Logout
+            </button>
+            </div>
         </div>
 
         {/* Dashboard Items */}
@@ -88,7 +105,6 @@ const CareerGuidanceDashboard = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

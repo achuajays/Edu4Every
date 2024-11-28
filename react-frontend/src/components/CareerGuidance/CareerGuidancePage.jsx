@@ -24,14 +24,28 @@ const CareerGuidancePage = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await axios.post('http://your-fastapi-backend/career-guidance', formData);
-      setCareerRecommendations(response.data.recommendations);
+      const response = await axios.post('https://a1e5-111-92-80-102.ngrok-free.app/carrier_guidance/roadmap', {
+        unique_id: formData.uniqueId, 
+        password: formData.password, // Add password field if necessary
+        current_education: formData.currentEducation,
+        interested_fields: formData.interestedFields,
+        skills: formData.skills,
+        career_goals: formData.careerGoals
+      });
+
+      if (response) {
+        setCareerRecommendations(response.data.recommendations);
+      } else {
+        // Handle failure or invalid response
+        console.error('Error: ', response.data.message || 'An error occurred');
+      }
     } catch (error) {
       console.error('Career guidance error:', error);
     } finally {
       setIsLoading(false);
     }
   };
+
 
   return (
     <div className="container mx-auto px-4 py-8">

@@ -16,12 +16,22 @@ const CareerGuidanceLogin = () => {
 
     if (unique_id && password) {
       try {
-        const response = await axios.post('https://a1e5-111-92-80-102.ngrok-free.app/carrier-guidance/login', {
-          unique_id, 
-          password,
-        });
+        const response = await axios.post(
+          'https://a1e5-111-92-80-102.ngrok-free.app/carrier_guidance/login', 
+          {
+            unique_id, 
+            password
+          },
+          {
+            headers: {
+              'accept': 'application/json',
+              'Content-Type': 'application/json'
+            }
+          }
+        );
 
-        if (response.data.success) {
+        
+        if (response.data.name) {
           localStorage.setItem('userRole', 'career-guidance');
           localStorage.setItem('studentName', response.data.name);
           localStorage.setItem('Id', unique_id);
@@ -43,7 +53,7 @@ const CareerGuidanceLogin = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 relative overflow-hidden"
-    style={{ backgroundImage: "url('https://c0.wallpaperflare.com/preview/274/250/540/career-success-path-stair.jpg')", backgroundSize: "cover",opacity: 0.8 }}
+    style={{ backgroundImage: "url('https://c0.wallpaperflare.com/preview/274/250/540/career-success-path-stair.jpg')", backgroundSize: "cover", opacity: 0.8 }}
     >
       <div className="absolute inset-0 opacity-10 bg-[size:100px_100px] bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)]"></div>
       

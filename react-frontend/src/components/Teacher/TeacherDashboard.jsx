@@ -2,7 +2,8 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { 
   BarChart3, 
-  Book, 
+  Book,
+  MessageCircleIcon, 
   MessageSquare, 
   Bot 
 } from 'lucide-react';
@@ -15,39 +16,34 @@ const TeacherDashboard = () => {
 
   // Logout handler
   const handleLogout = () => {
-    // Clear localStorage and navigate to login page
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('studentName');
     localStorage.removeItem('teacherName');
-    navigate('/login');
+    localStorage.removeItem('Id');
+    navigate('/');
   };
 
   const dashboardItems = [
     {
-      title: 'Student Progress',
-      description: 'Monitor and analyze student performance',
-      link: '/student-tracking',
+      title: 'Assignment Grading',
+      description: 'Grade student assignments',
+      link: '/assignment-grading',
       icon: BarChart3,
       color: 'bg-blue-100 text-blue-600'
     },
     {
-      title: 'Course Management',
-      description: 'Create and manage course content',
-      link: '/course-management',
-      icon: Book,
-      color: 'bg-green-100 text-green-600'
+        title: 'Telegram Chat Bot',
+        description: 'Our Telegram chat bot can do anything: text generation, audio processing, and image explanation',
+        link: 'https://telegram.me/BotFather',
+        icon: MessageCircleIcon,
+        color: 'bg-orange-100 text-orange-600'
     },
     {
-      title: 'AI Teaching Assistant',
-      description: 'Get AI-powered teaching recommendations',
-      link: '/ai-teaching-assistant',
+      title: 'Voice Transcription and Summarization',
+      description: 'Transcribe and summarize audio files',
+      link: '/voice-recording',
       icon: Bot,
-      color: 'bg-purple-100 text-purple-600'
-    },
-    {
-      title: 'Communication Hub',
-      description: 'Connect with students and manage communications',
-      link: '/communication',
-      icon: MessageSquare,
-      color: 'bg-orange-100 text-orange-600'
+      color: 'bg-blue-100 text-blue-600'
     }
   ];
 

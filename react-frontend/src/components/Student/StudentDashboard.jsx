@@ -12,9 +12,11 @@ const StudentDashboard = () => {
   const studentName = localStorage.getItem('studentName');
 
   const handleLogout = () => {
-    // Clear localStorage and navigate to login page
+    localStorage.removeItem('userRole');
     localStorage.removeItem('studentName');
-    navigate('/login');
+    localStorage.removeItem('teacherName');
+    localStorage.removeItem('Id');
+    navigate('/');
   };
 
   const dashboardItems = [

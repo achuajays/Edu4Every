@@ -88,6 +88,8 @@ import CallFeaturePage from './components/Student/CallFeaturePage';
 import ResumeBuilderPage from './components/Student/ResumeBuilderPage';
 import CustomerService from './components/chat/CustomerService';
 import WritingAssistant from './components/Student/WritingAssistant';
+import JobRecommendations from './components/CareerGuidance/JobRecommendations';
+import VoiceRecordingComponent from './components/Teacher/VoiceRecordingComponent';
 
 function App() {
   return (
@@ -113,6 +115,8 @@ function App() {
           <Route path="/call-feature" element={<CallFeaturePage />} />
           <Route path="/resume-builder" element={<ResumeBuilderPage />} />
           <Route path="/writing-assistant" element={<WritingAssistant />} />
+          <Route path="/job-search" element={<JobRecommendations />} />
+          <Route path="/voice-recording" element={<VoiceRecordingComponent />} />
         </Routes>
       </div>
     </Router>
