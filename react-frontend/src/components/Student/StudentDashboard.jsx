@@ -19,7 +19,7 @@ const StudentDashboard = () => {
 
   const dashboardItems = [
     {
-      title: 'AI Consultation',
+      title: 'AI Learning',
       description: 'Schedule an AI-powered career consultation call',
       link: '/call-feature',
       icon: VideoIcon,
