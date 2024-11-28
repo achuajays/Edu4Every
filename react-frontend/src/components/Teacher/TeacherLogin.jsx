@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const TeacherLogin = () => {
-  const [teacherId, setTeacherId] = useState(''); // Changed from email to teacherId
+  const [teacher_id, setTeacherId] = useState(''); // Changed from email to teacherId
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const TeacherLogin = () => {
     try {
       // Send teacherId and password for authentication
       const response = await axios.post('http://your-backend-url/auth/teacher', {
-        teacherId, // Sending teacherId instead of email
+        teacher_id, // Sending teacherId instead of email
         password,
       });
 

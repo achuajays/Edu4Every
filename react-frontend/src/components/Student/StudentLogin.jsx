@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const StudentLogin = () => {
-  const [uniqueId, setUniqueId] = useState(''); // Changed email to uniqueId
+  const [unique_id, setUniqueId] = useState(''); // Changed email to uniqueId
   const [password, setPassword] = useState('');
   const [error, setError] = useState(''); // For error message
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const StudentLogin = () => {
     try {
       // Sending uniqueId and password to the backend for authentication
       const response = await axios.post('http://your-backend-url/auth/student', {
-        uniqueId, // Sending uniqueId instead of email
+        unique_id, // Sending uniqueId instead of email
         password,
       });
 

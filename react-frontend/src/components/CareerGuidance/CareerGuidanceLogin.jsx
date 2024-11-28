@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; // For making API requests
 
 const CareerGuidanceLogin = () => {
-  const [uniqueId, setUniqueId] = useState(''); // Changed from email to uniqueId
+  const [unique_id, setUniqueId] = useState(''); // Changed from email to uniqueId
   const [password, setPassword] = useState('');
   const [error, setError] = useState(''); // For error messages
   const navigate = useNavigate();
@@ -12,11 +12,11 @@ const CareerGuidanceLogin = () => {
     e.preventDefault();
     setError(''); // Clear previous error messages
 
-    if (uniqueId && password) {
+    if (unique_id && password) {
       try {
         // Make an API call with uniqueId and password
         const response = await axios.post('https://your-backend-api.com/login', {
-          uniqueId, // Send uniqueId instead of email
+          unique_id, 
           password,
         });
 
