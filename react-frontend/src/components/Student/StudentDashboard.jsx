@@ -19,25 +19,7 @@ const StudentDashboard = () => {
 
   const dashboardItems = [
     {
-<<<<<<< Updated upstream
-      title: 'Resume Builder',
-      description: 'Create a professional resume with AI assistance',
-      link: '/resume-builder',
-      icon: FileTextIcon,
-      color: 'bg-blue-100 text-blue-600'
-    },
-    {
-      title: 'Career Guidance',
-      description: 'Get personalized career advice and recommendations',
-      link: '/career-guidance',
-      icon: CompassIcon,
-      color: 'bg-green-100 text-green-600'
-    },
-    {
       title: 'AI Consultation',
-=======
-      title: 'AI Learning',
->>>>>>> Stashed changes
       description: 'Schedule an AI-powered career consultation call',
       link: '/call-feature',
       icon: VideoIcon,
