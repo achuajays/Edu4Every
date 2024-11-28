@@ -25,7 +25,7 @@ const ResumeBuilderPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://your-fastapi-backend/generate-resume', formData);
+      const response = await axios.post('https://a1e5-111-92-80-102.ngrok-free.app/process_carrier_guidance/process_guidance', formData);
       setGeneratedResume(response.data.resume);
     } catch (error) {
       console.error('Resume generation error:', error);

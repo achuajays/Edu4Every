@@ -87,6 +87,7 @@ import CareerGuidanceLogin from './components/CareerGuidance/CareerGuidanceLogin
 import CallFeaturePage from './components/Student/CallFeaturePage';
 import ResumeBuilderPage from './components/Student/ResumeBuilderPage';
 import CustomerService from './components/chat/CustomerService';
+import WritingAssistant from './components/Student/WritingAssistant';
 
 function App() {
   return (
@@ -111,6 +112,7 @@ function App() {
           {/* Feature Routes */}
           <Route path="/call-feature" element={<CallFeaturePage />} />
           <Route path="/resume-builder" element={<ResumeBuilderPage />} />
+          <Route path="/writing-assistant" element={<WritingAssistant />} />
         </Routes>
       </div>
     </Router>

@@ -19,11 +19,11 @@ const CareerGuidanceDashboard = () => {
         icon: BriefcaseIcon, 
         color: 'bg-green-100 text-green-600' },
     {
-      title: 'Resume Review',
-      description: 'Have your resume reviewed by industry professionals',
-      link: '/resume-review',
-      icon: BarChartIcon,
-      color: 'bg-yellow-100 text-yellow-600'
+        title: 'Resume Builder',
+        description: 'Create a professional resume with AI assistance',
+        link: '/resume-builder',
+        icon: FileTextIcon,
+        color: 'bg-blue-100 text-blue-600'
     },
     {
       title: 'Job Search Assistance',

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { 
-  Book, 
+  Book,
   FileTextIcon, 
   VideoIcon, 
-  CompassIcon 
+  MessageCircleIcon
 } from 'lucide-react';
 
 const StudentDashboard = () => {
@@ -19,6 +19,7 @@ const StudentDashboard = () => {
 
   const dashboardItems = [
     {
+<<<<<<< Updated upstream
       title: 'Resume Builder',
       description: 'Create a professional resume with AI assistance',
       link: '/resume-builder',
@@ -34,17 +35,34 @@ const StudentDashboard = () => {
     },
     {
       title: 'AI Consultation',
+=======
+      title: 'AI Learning',
+>>>>>>> Stashed changes
       description: 'Schedule an AI-powered career consultation call',
       link: '/call-feature',
       icon: VideoIcon,
       color: 'bg-purple-100 text-purple-600'
     },
     {
-      title: 'Learning Resources',
-      description: 'Access educational materials and study guides',
-      link: '/resources',
-      icon: Book,
+      title: 'Telegram Chat Bot',
+      description: 'Our Telegram chat bot can do anything: text generation, audio processing, and image explanation',
+      link: 'https://telegram.me/BotFather',
+      icon: MessageCircleIcon,
       color: 'bg-orange-100 text-orange-600'
+    },
+    {
+      title: 'PDF Answer Finder',
+      description: 'Find answers to your questions in PDFs',
+      link: '/pdf-qa',
+      icon: FileTextIcon,
+      color: 'bg-blue-100 text-blue-600'
+    },
+    {
+      title: 'Writing Assistant',
+      description: 'Get suggestions for better grammar and clarity',
+      link: '/writing-assistant',
+      icon: Book,
+      color: 'bg-green-100 text-green-600'
     }
   ];
 
