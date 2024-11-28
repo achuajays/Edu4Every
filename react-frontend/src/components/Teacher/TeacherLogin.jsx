@@ -3,39 +3,44 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const TeacherLogin = () => {
-  const [teacher_id, setTeacherId] = useState(''); // Changed from email to teacherId
+  const [teacherId, setTeacherId] = useState(''); // Changed to teacherId
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError('');
+    setError(''); // Reset error before starting login process
 
     try {
       // Send teacherId and password for authentication
       const response = await axios.post('http://your-backend-url/auth/teacher', {
-        teacher_id, // Sending teacherId instead of email
+        teacher_id: teacherId,
         password,
       });
 
-      // Store authentication token and user role
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('userRole', 'teacher');
+      // Assuming response contains teacher's name and teacherId
+      const { name, teacher_id } = response.data;
+
+      // Store teacher information in localStorage
+      localStorage.setItem('teacherName', name);
+      localStorage.setItem('teacherId', teacher_id);
 
       // Navigate to teacher dashboard
       navigate('/dashboard/teacher');
     } catch (error) {
       console.error('Login failed', error);
 
-      // Handle login error
+      // Handle login error properly
       if (axios.isAxiosError(error)) {
+        // Handle errors from the backend response
         setError(
           (error.response && error.response.data && error.response.data.message) ||
           'Login failed. Please check your credentials.'
         );
       } else {
-        setError('An unexpected error occurred');
+        // Handle unexpected errors
+        setError('An unexpected error occurred. Please try again later.');
       }
     }
   };

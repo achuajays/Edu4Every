@@ -51,8 +51,10 @@ const CareerGuidancePage = () => {
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="high_school">High School</option>
+                <option value="diploma">Diploma</option>
                 <option value="undergraduate">Undergraduate</option>
-                <option value="graduate">Graduate</option>
+                <option value="graduate">PostGraduate</option>
+
               </select>
             </div>
             <div>

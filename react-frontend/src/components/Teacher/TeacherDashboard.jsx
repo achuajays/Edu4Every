@@ -8,6 +8,9 @@ import {
 } from 'lucide-react';
 
 const TeacherDashboard = () => {
+  // Get the logged-in teacher's name from localStorage
+  const teacherName = localStorage.getItem('teacherName');
+
   const dashboardItems = [
     {
       title: 'Student Progress',
@@ -42,8 +45,15 @@ const TeacherDashboard = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="bg-white shadow-xl rounded-xl overflow-hidden">
-        <div className="bg-gradient-to-r from-green-500 to-blue-600 p-6">
+        {/* Navbar */}
+        <div className="bg-gradient-to-r from-green-500 to-blue-600 p-6 flex justify-between items-center">
           <h1 className="text-3xl font-bold text-white">Teacher Dashboard</h1>
+          {/* Display teacher's name */}
+          {teacherName && (
+            <span className="text-white text-xl font-medium">
+              Welcome, {teacherName}!
+            </span>
+          )}
         </div>
         <div className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -21,8 +21,8 @@ const CareerGuidanceLogin = () => {
         });
 
         if (response.data.success) {
-          localStorage.setItem('token', response.data.token); // Store token
-          localStorage.setItem('userRole', 'career-guidance'); // Store role
+          localStorage.setItem('userRole', 'career-guidance'); // Store user role
+          localStorage.setItem('studentName', response.data.name); // Store student name for personalized greeting
           navigate('/dashboard/career-guidance'); // Navigate to the dashboard
         } else {
           setError('Invalid credentials. Please try again.');
@@ -53,8 +53,8 @@ const CareerGuidanceLogin = () => {
             <input
               type="text"
               id="uniqueId"
-              value={uniqueId}
-              onChange={(e) => setUniqueId(e.target.value)} // Update uniqueId state
+              value={unique_id} // Update unique_id state
+              onChange={(e) => setUniqueId(e.target.value)} // Update unique_id state
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your unique ID"
               required

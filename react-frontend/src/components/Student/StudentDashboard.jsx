@@ -8,6 +8,9 @@ import {
 } from 'lucide-react';
 
 const StudentDashboard = () => {
+  // Retrieve the student's name from localStorage
+  const studentName = localStorage.getItem('studentName');
+
   const dashboardItems = [
     {
       title: 'Resume Builder',
@@ -42,9 +45,18 @@ const StudentDashboard = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="bg-white shadow-xl rounded-xl overflow-hidden">
-        <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6">
+        {/* Navbar with student's name */}
+        <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6 flex justify-between items-center">
           <h1 className="text-3xl font-bold text-white">Student Dashboard</h1>
+          {/* Display student's name */}
+          {studentName && (
+            <span className="text-white text-xl font-medium">
+              Welcome, {studentName}!
+            </span>
+          )}
         </div>
+
+        {/* Dashboard Items */}
         <div className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {dashboardItems.map((item, index) => {
