@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   ArrowRightIcon, 
@@ -12,8 +12,47 @@ import {
   NewspaperIcon
 } from '@heroicons/react/24/outline';
 
+
+const Modal = ({ isOpen, onClose, title, content }) => {
+    if (!isOpen) return null;
+  
+    return (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
+        <div className="bg-white rounded-lg p-8 max-w-lg mx-auto relative shadow-lg transition-all transform duration-300 ease-in-out scale-95 opacity-100">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">{title}</h2>
+          <p className="text-gray-700 mb-4">{content}</p>
+          <button
+            className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 transition-colors duration-300"
+            onClick={onClose}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    );
+  };
+
 const LandingPage = () => {
   const navigate = useNavigate();
+  const userPathsRef = useRef(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const scrollToUserPaths = () => {
+    userPathsRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const PrimaryButton = ({ text, onClick, className = '', icon: Icon }) => (
     <button
@@ -62,7 +101,7 @@ const LandingPage = () => {
       </div>
       <PrimaryButton
         text="Read More"
-        onClick={() => navigate('/blog/post')}
+        onClick={() => setIsModalOpen(true)}
         className="bg-blue-600 hover:bg-blue-700 self-center mt-auto"
         icon={ArrowRightIcon}
       />
@@ -86,13 +125,13 @@ const LandingPage = () => {
           <div className="flex items-center space-x-4">
             <button
               className="px-4 py-2 text-blue-600 hover:text-blue-800 transition-colors font-medium"
-              onClick={() => navigate('/login')}
+              onClick={() => navigate('/auth/student')}
             >
               Login
             </button>
             <PrimaryButton
               text="Sign Up"
-              onClick={() => navigate('/signup')}
+              onClick={() => navigate('/')}
               className="bg-blue-600 hover:bg-blue-700"
               icon={ArrowRightIcon}
             />
@@ -124,13 +163,13 @@ const LandingPage = () => {
           <div className="flex flex-col sm:flex-row gap-4">
             <PrimaryButton
               text="Get Started"
-              onClick={() => navigate('/signup')}
+              onClick={scrollToUserPaths}
               className="bg-blue-600 hover:bg-blue-700"
               icon={RocketLaunchIcon}
             />
             <PrimaryButton
               text="Learn More"
-              onClick={() => navigate('/about')}
+              onClick={() => setIsModalOpen(true)}
               className="bg-gray-600 hover:bg-gray-700"
               icon={BookOpenIcon}
             />
@@ -148,6 +187,7 @@ const LandingPage = () => {
 
       {/* User Paths Section */}
       <section 
+        ref={userPathsRef}
         className="bg-white py-20 px-4 lg:px-6"
         aria-labelledby="choose-path-heading"
       >
@@ -213,6 +253,29 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
+
+      <Modal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Learn More About Edu4Every"
+        content={`
+        Edu4Every is dedicated to providing personalized learning experiences through innovative technology and expert guidance. 
+        Our platform connects learners with global opportunities, ensuring that education is accessible and tailored to individual needs. 
+        With a focus on personalized learning paths, Edu4Every empowers students to learn at their own pace, 
+        while offering a wide range of resources, from expert-led courses to interactive tools designed to engage and inspire.
+
+        We believe in the power of technology to transform education, and our platform offers:
+        - **Tailored learning experiences** that adapt to each student's pace and needs.
+        - **Expert instructors** providing guidance, mentorship, and real-world experience.
+        - **Global learning opportunities** that connect students with education from anywhere in the world.
+        - **Collaborative features** to foster peer-to-peer learning and community building.
+        
+        Edu4Every is more than just a platform—it's a community of learners and educators dedicated to shaping the future of education. 
+        Whether you're looking to develop new skills, advance your career, or explore new academic disciplines, Edu4Every provides the resources, 
+        support, and opportunities you need to succeed. Join us today and start your personalized learning journey!
+        `}
+        >
+      </Modal>
 
       {/* Features Section */}
       <section 
@@ -291,7 +354,6 @@ const LandingPage = () => {
           <div className="mt-12">
             <PrimaryButton
               text="View All Blog Posts"
-              onClick={() => navigate('/blog')}
               className="bg-gray-700 hover:bg-gray-800"
               icon={ArrowRightIcon}
             />
@@ -318,7 +380,6 @@ const LandingPage = () => {
           </p>
           <PrimaryButton
             text="Discover Our Story"
-            onClick={() => navigate('/about')}
             className="bg-gray-700 hover:bg-gray-800"
             icon={ChatBubbleLeftRightIcon}
           />
