@@ -11,10 +11,12 @@ const TeacherLogin = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(''); // Reset error before starting login process
+    console.log("Teacher ID:", teacherId);
+    console.log("Password:", password);
 
     try {
       // Send teacherId and password for authentication
-      const response = await axios.post('http://your-backend-url/auth/teacher', {
+      const response = await axios.post('https://a1e5-111-92-80-102.ngrok-free.app/teacher/login', {
         teacher_id: teacherId,
         password,
       });
@@ -24,7 +26,8 @@ const TeacherLogin = () => {
 
       // Store teacher information in localStorage
       localStorage.setItem('teacherName', name);
-      localStorage.setItem('teacherId', teacher_id);
+      localStorage.setItem('Id', teacher_id);
+      localStorage.setItem('userRole', 'teacher');
 
       // Navigate to teacher dashboard
       navigate('/dashboard/teacher');

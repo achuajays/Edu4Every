@@ -13,13 +13,15 @@ const StudentLogin = () => {
     setError('');
 
     try {
-      const response = await axios.post('http://your-backend-url/auth/student', {
+      const response = await axios.post('https://a1e5-111-92-80-102.ngrok-free.app/student/login', {
         unique_id, // Send uniqueId instead of email
         password,
       });
 
       // Store the student's name in localStorage after successful login
-      localStorage.setItem('studentName', response.data.name); // Save student name
+      localStorage.setItem('studentName', response.data.name);
+      localStorage.setItem('Id', unique_id);
+      localStorage.setItem('userRole', 'student');
 
       // Navigate to student dashboard
       navigate('/dashboard/student');

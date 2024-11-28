@@ -15,14 +15,15 @@ const CareerGuidanceLogin = () => {
     if (unique_id && password) {
       try {
         // Make an API call with uniqueId and password
-        const response = await axios.post('https://your-backend-api.com/login', {
+        const response = await axios.post('https://a1e5-111-92-80-102.ngrok-free.app/carrier-guidance/login', {
           unique_id, 
           password,
         });
 
         if (response.data.success) {
           localStorage.setItem('userRole', 'career-guidance'); // Store user role
-          localStorage.setItem('studentName', response.data.name); // Store student name for personalized greeting
+          localStorage.setItem('studentName', response.data.name);
+          localStorage.setItem('Id', unique_id);
           navigate('/dashboard/career-guidance'); // Navigate to the dashboard
         } else {
           setError('Invalid credentials. Please try again.');
