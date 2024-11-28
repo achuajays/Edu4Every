@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const TeacherLogin = () => {
-  const [email, setEmail] = useState('');
+  const [teacherId, setTeacherId] = useState(''); // Changed from email to teacherId
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -13,8 +13,9 @@ const TeacherLogin = () => {
     setError('');
 
     try {
+      // Send teacherId and password for authentication
       const response = await axios.post('http://your-backend-url/auth/teacher', {
-        email,
+        teacherId, // Sending teacherId instead of email
         password,
       });
 
@@ -45,10 +46,10 @@ const TeacherLogin = () => {
         <h2 className="text-2xl font-bold mb-6 text-center">Teacher Login</h2>
         <form onSubmit={handleLogin} className="space-y-4">
           <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text" // Changed to text for teacherId
+            placeholder="Teacher ID"
+            value={teacherId}
+            onChange={(e) => setTeacherId(e.target.value)} // Handle teacherId change
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />

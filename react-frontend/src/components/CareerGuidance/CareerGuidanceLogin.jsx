@@ -1,20 +1,37 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // For making API requests
 
 const CareerGuidanceLogin = () => {
-  const [email, setEmail] = useState('');
+  const [uniqueId, setUniqueId] = useState(''); // Changed from email to uniqueId
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(''); // For error messages
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Simulated login logic
-    if (email && password) {
-      localStorage.setItem('token', 'career-guidance-token');
-      localStorage.setItem('userRole', 'career-guidance');
-      navigate('/dashboard/career-guidance');
+    setError(''); // Clear previous error messages
+
+    if (uniqueId && password) {
+      try {
+        // Make an API call with uniqueId and password
+        const response = await axios.post('https://your-backend-api.com/login', {
+          uniqueId, // Send uniqueId instead of email
+          password,
+        });
+
+        if (response.data.success) {
+          localStorage.setItem('token', response.data.token); // Store token
+          localStorage.setItem('userRole', 'career-guidance'); // Store role
+          navigate('/dashboard/career-guidance'); // Navigate to the dashboard
+        } else {
+          setError('Invalid credentials. Please try again.');
+        }
+      } catch (err) {
+        setError('An error occurred. Please try again later.');
+      }
     } else {
-      alert('Please enter valid credentials');
+      setError('Please enter valid credentials.');
     }
   };
 
@@ -24,18 +41,22 @@ const CareerGuidanceLogin = () => {
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
           Career Guidance Login
         </h2>
+
+        {/* Error message display */}
+        {error && <div className="text-red-500 text-center mb-4">{error}</div>}
+
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
-              Email
+            <label htmlFor="uniqueId" className="block text-gray-700 font-medium mb-2">
+              Unique ID
             </label>
             <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              id="uniqueId"
+              value={uniqueId}
+              onChange={(e) => setUniqueId(e.target.value)} // Update uniqueId state
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your email"
+              placeholder="Enter your unique ID"
               required
             />
           </div>
