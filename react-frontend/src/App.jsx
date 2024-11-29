@@ -91,6 +91,7 @@ import WritingAssistant from './components/Student/WritingAssistant';
 import JobRecommendations from './components/CareerGuidance/JobRecommendations';
 import VoiceRecordingComponent from './components/Teacher/VoiceRecordingComponent';
 import CallAIPage from './components/CareerGuidance/CallAIPage';
+import AssignmentGrading from './components/Teacher/AssignmentGrading'
 
 function App() {
   return (
@@ -119,6 +120,7 @@ function App() {
           <Route path="/job-search" element={<JobRecommendations />} />
           <Route path="/voice-recording" element={<VoiceRecordingComponent />} />
           <Route path="/ai-phonecall-career" element={<CallAIPage />} />
+          <Route path="/assignment" element={<AssignmentGrading/>} />
         </Routes>
       </div>
     </Router>

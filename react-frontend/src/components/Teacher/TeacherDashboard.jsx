@@ -27,7 +27,7 @@ const TeacherDashboard = () => {
     {
       title: 'Assignment Grading',
       description: 'Grade student assignments',
-      link: '/assignment-grading',
+      link: '/assignment',
       icon: BarChart3,
       color: 'bg-blue-100 text-blue-600'
     },
