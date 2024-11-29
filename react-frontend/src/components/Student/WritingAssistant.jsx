@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
+import {  FaPen } from 'react-icons/fa';
 
 const WritingAssistant = () => {
   const [userInput, setUserInput] = useState('');
@@ -70,6 +71,16 @@ const WritingAssistant = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
+       <header className="text-center mb-6">
+        <h1 className="text-2xl font-bold text-blue-600 flex items-center justify-center">
+          <FaPen className="mr-2" />
+          Writing Assistant
+        </h1>
+        <p className="text-gray-600 mt-2">
+          Enhance your writing with grammar and style suggestions.
+        </p>
+      </header>
+
       <textarea
         value={userInput}
         onChange={handleInputChange}
