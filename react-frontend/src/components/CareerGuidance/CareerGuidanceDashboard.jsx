@@ -4,7 +4,8 @@ import {
   UsersIcon, 
   FileTextIcon, 
   LightbulbIcon ,
-  BriefcaseIcon
+  BriefcaseIcon ,
+  RocketIcon
 } from 'lucide-react';
 
 const CareerGuidanceDashboard = () => {
@@ -41,12 +42,19 @@ const navigate = useNavigate();
       icon: UsersIcon,
       color: 'bg-blue-100 text-blue-600'
     },
+    // {
+    //   title: 'Interview Preparation',
+    //   description: 'Prepare for interviews with mock interviews and tips',
+    //   link: '/interview-preparation',
+    //   icon: LightbulbIcon,
+    //   color: 'bg-purple-100 text-purple-600'
+    // },
     {
-      title: 'Interview Preparation',
-      description: 'Prepare for interviews with mock interviews and tips',
-      link: '/interview-preparation',
-      icon: LightbulbIcon,
-      color: 'bg-purple-100 text-purple-600'
+        title: 'AI Career Guidance',
+        description: 'Get personalized career advice and recommendations from AI',
+        link: '/ai-phonecall-career',
+        icon: RocketIcon,
+        color: 'bg-orange-100 text-orange-600'
     }
   ];
 
