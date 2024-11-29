@@ -4,53 +4,67 @@ import jsPDF from 'jspdf';
 
 const WritingAssistant = () => {
   const [userInput, setUserInput] = useState('');
-  const [suggestion, setSuggestion] = useState(null);
+  const [suggestions, setSuggestions] = useState([]); // Change to an array for multiple suggestions
 
   // Function to handle text input
   const handleInputChange = (e) => {
-    setUserInput(e.target.value);
+    const value = e.target.value;
+    setUserInput(value);
+
+    // Check if the last character is a period
+    if (value.trim().endsWith('.')) {
+      processText(value.slice(0, -1)); // Call processText without the period
+    }
   };
 
-  // Function to process text (send to backend when text ends with a period)
-  const processText = async () => {
-    if (userInput.trim().endsWith('.')) {
-      const textBeforePeriod = userInput.slice(0, -1); // Remove the period
-
-      try {
-        const response = await axios.post('/api/grammar-check', {
-          text: textBeforePeriod,
-        });
-
-        if (response.data && response.data.suggestion) {
-          setSuggestion(response.data.suggestion); // Assuming result contains { text, explanation }
+  // Function to process text (send to backend)
+  const processText = async (textBeforePeriod) => {
+    try {
+      const response = await axios.post(
+        `https://a1e5-111-92-80-102.ngrok-free.app/writing_assistant/check-sentence`,
+        null,
+        {
+          params: { sentence: textBeforePeriod },
+          headers: { accept: 'application/json' },
         }
-      } catch (error) {
-        console.error('Error fetching suggestion:', error);
+      );
+      console.log('Suggestion received:', response.data);
+      if (response.data && response.data.suggestions) {
+        setSuggestions(response.data.suggestions); // Update to set an array of suggestions
       }
+    } catch (error) {
+      console.error('Error fetching suggestion:', error);
     }
   };
 
-  // Approve the suggestion (replace the original text with suggested text)
-  const approveSuggestion = () => {
-    if (suggestion) {
-      setUserInput(suggestion.text + '.'); // Add the period back
-      setSuggestion(null);
-    }
-  };
-
-  // Reject the suggestion (keep the original text)
-  const rejectSuggestion = () => {
-    setSuggestion(null);
-  };
-
-  // Function to download the content as a PDF
+  // Function to download content as PDF remains unchanged
   const downloadPDF = () => {
     const doc = new jsPDF();
+    const margin = 10;
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const lineHeight = 10;
+    const maxLineWidth = pageWidth - margin * 2;
+    let yPosition = margin + 10;
+
+    doc.setFontSize(14);
+    doc.setFont('Helvetica', 'bold');
+    doc.text('ASSIGNMENT:', pageWidth / 2, margin, { align: 'center' });
 
     doc.setFontSize(12);
-    doc.text('ASSIGNMENT:', doc.internal.pageSize.getWidth() / 2, 10, { align: 'center' });
-    doc.text('', 10, 20);
-    doc.text(userInput, 10, 20);
+    doc.setFont('Helvetica', 'normal');
+
+    const lines = doc.splitTextToSize(userInput, maxLineWidth);
+
+    lines.forEach((line) => {
+      if (yPosition + lineHeight > pageHeight - margin) {
+        doc.addPage();
+        yPosition = margin;
+      }
+      doc.text(line, margin, yPosition);
+      yPosition += lineHeight;
+    });
+
     doc.save('grammar-suggested-text.pdf');
   };
 
@@ -59,38 +73,23 @@ const WritingAssistant = () => {
       <textarea
         value={userInput}
         onChange={handleInputChange}
-        onBlur={processText} // Trigger on blur (user finishes typing)
         placeholder="Enter your text here..."
         className="w-full max-w-lg h-40 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
-      {/* Tooltip for grammar suggestion */}
-      {suggestion && (
-        <div className="absolute bg-white border border-gray-300 rounded-md shadow-lg p-4 mt-2 w-80">
-          <p className="font-semibold">Suggested Grammar:</p>
-          <p>{suggestion.text}</p>
-          <p className="mt-2 font-semibold">Explanation:</p>
-          <p>{suggestion.explanation}</p>
-          <div className="flex justify-between mt-4">
-            <button 
-              onClick={approveSuggestion} 
-              className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600"
-            >
-              Approve
-            </button>
-            <button 
-              onClick={rejectSuggestion} 
-              className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
-            >
-              Reject
-            </button>
-          </div>
+      {/* Display suggestions directly below the textarea */}
+      {suggestions.length > 0 && (
+        <div className="mt-4 bg-white border border-gray-300 rounded-md shadow-lg p-4 w-full max-w-lg">
+          <p className="font-semibold">Suggestions:</p>
+          <ul className="list-disc pl-5">
+            {suggestions}
+          </ul>
         </div>
       )}
 
       {/* Download Button */}
-      <button 
-        onClick={downloadPDF} 
+      <button
+        onClick={downloadPDF}
         className="mt-4 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
       >
         Download PDF
