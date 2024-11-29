@@ -16,6 +16,12 @@ Edu4Every is an innovative AI-powered learning platform designed to democratize 
 - Direct communication with AI learning assistants
 - Seamless phone number integration
 
+### 3. Resume Builder
+- AI-driven resume creation
+
+### 4. Note Generation from audio
+- AI-powered note-taking from audio recordings
+
 ## 🚀 Technologies Used
 
 - **Frontend:** 
