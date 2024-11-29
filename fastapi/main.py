@@ -10,6 +10,9 @@ from routers.writing_assistant import router as writing_assistant_router
 from routers.ai_note_maker import router as ai_note_maker
 from routers.ai_call_assistant import router as call_assistant
 from routers.ai_assiagment_correcter import router as ai_assiagment_correcter
+from routers.ai_learning_cource import router as ai_learning_cource
+from routers.ai_mock_test_genarate import router as ai_mock_test_genarate
+from routers.ai_roadmap import router as ai_roadmap
 from cors import add_cors  # Import the CORS configuration
 
 app = FastAPI()
@@ -29,3 +32,6 @@ app.include_router(writing_assistant_router, prefix="/writing_assistant", tags=[
 app.include_router(ai_note_maker, prefix="/transcribe-audio", tags=["Transcribe Audio"])
 app.include_router(call_assistant, prefix="/initiate-call", tags=["Initiate Call"])
 app.include_router(ai_assiagment_correcter, prefix="/correct-ai-assiagment", tags=["Correct AI Assiagment"])
+app.include_router(ai_learning_cource, prefix="/ai-learning-cource", tags=["AI Learning Cource"])
+app.include_router(ai_mock_test_genarate, prefix="/ai-mock-test-genarate", tags=["AI Mock Test Genarate"])
+app.include_router(ai_roadmap, prefix="/ai-roadmap", tags=["AI Roadmap"])
