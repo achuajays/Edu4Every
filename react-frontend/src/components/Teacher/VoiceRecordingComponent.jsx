@@ -69,7 +69,7 @@ const VoiceRecordingComponent = () => {
         setLoading(true);
         try {
             const response = await axios.post(
-                'https://a1e5-111-92-80-102.ngrok-free.app/transcribe-audio/transcribe-and-summarize',
+                'https://5940-111-92-80-102.ngrok-free.app/transcribe-audio/transcribe-and-summarize',
                 formData,
                 { headers: { 'Content-Type': 'multipart/form-data' } }
             );
@@ -88,7 +88,7 @@ const VoiceRecordingComponent = () => {
         setImageLoading(true);
         try {
             const response = await axios.post(
-                `https://a1e5-111-92-80-102.ngrok-free.app/search-image/search-image?query=${encodeURIComponent(topic)}`,
+                `https://5940-111-92-80-102.ngrok-free.app/search-image/search-image?query=${encodeURIComponent(topic)}`,
                 {},
                 { headers: { 'accept': 'application/json' } }
             );

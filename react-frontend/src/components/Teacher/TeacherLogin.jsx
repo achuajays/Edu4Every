@@ -14,7 +14,7 @@ const TeacherLogin = () => {
     setError('');
 
     try {
-      const response = await axios.post('https://a1e5-111-92-80-102.ngrok-free.app/teacher/login', {
+      const response = await axios.post('https://5940-111-92-80-102.ngrok-free.app/teacher/login', {
         teacher_id: teacherId,
         password,
       });
