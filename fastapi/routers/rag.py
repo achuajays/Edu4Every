@@ -1,79 +1,100 @@
 import os
-import re
-from fastapi import APIRouter, HTTPException, UploadFile, File
+import time
+from fastapi import APIRouter, UploadFile, File, Form, HTTPException
 from fastapi.responses import JSONResponse
-from llmware.prompts import Prompt
-from llmware.setup import Setup
+from llmware.parsers import Parser
 from llmware.configs import LLMWareConfig
-from llmware.retrieval import Query
-from llmware.library import Library
-
-router = APIRouter()
+from dotenv import load_dotenv
+from groq import Groq
+import json
 
 # Load environment variables
-LLMWareConfig().set_active_db("sqlite")
+load_dotenv()
 
-# Path for saving uploaded PDFs
-UPLOAD_DIR = "uploaded_pdfs"
-os.makedirs(UPLOAD_DIR, exist_ok=True)
+# Initialize Groq client
+client = Groq(api_key=os.getenv("groq_api"))
 
+# Initialize the FastAPI router
+router = APIRouter()
 
-@router.post("/process-pdf")
-async def process_pdf(file: UploadFile = File(...), question: str = ""):
-    """API to upload a PDF file, process it, and return an answer to the given question"""
+# Define the folder where uploaded PDFs will be stored
+UPLOAD_FOLDER = "assignment_folder"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Ensure the folder exists
+
+# Define the API endpoint for uploading and processing the PDF
+@router.post("/upload-and-process-pdf")
+async def upload_and_process_pdf(
+    file: UploadFile = File(...),
+    query: str = Form(...),  # Query to pass to Groq
+):
+    """
+    API endpoint to upload a PDF file, extract text from it, and query Groq.
+
+    Parameters:
+        file (UploadFile): PDF file to be uploaded and processed.
+        query (str): Query to be used with Groq.
+
+    Returns:
+        dict: Extracted text from the PDF and the response from Groq.
+    """
     try:
-        # Save the uploaded PDF to disk
-        pdf_path = os.path.join(UPLOAD_DIR, file.filename)
-        with open(pdf_path, "wb") as f:
+        # Save the uploaded PDF to the UPLOAD_FOLDER
+        file_path = os.path.join(UPLOAD_FOLDER, file.filename)
+        with open(file_path, "wb") as f:
             f.write(await file.read())
 
-        # Initialize the library
-        contracts_lib = Library().create_new_library("example4_library")
+        print(f"File uploaded to: {file_path}")
 
-        # Add the file directly, or make sure to handle it as a directory if necessary
-        contracts_lib.add_files(UPLOAD_DIR)  # Passing the directory where the file is saved
+        # Initialize LLMWare database
+        LLMWareConfig().set_active_db("sqlite")
 
-        # Initialize the query object
-        q = Query(contracts_lib)
+        # Initialize the parser
+        parser = Parser()
 
-        # Get a list of document IDs
-        doc_list = q.list_doc_id()
+        # Process the uploaded PDF using OCR
+        t0 = time.time()
+        print(f"Processing file: {file.filename}")
 
-        # Load the model for prompt generation
-        model_name = "llmware/bling-tiny-llama-v0"
-        prompter = Prompt().load_model(model_name)
+        parser_output = parser.parse_one_pdf_by_ocr_images(UPLOAD_FOLDER, file.filename, save_history=True)
 
-        # Prepare the query for RAG processing
-        results = []
+        if parser_output:
+            extracted_text = "\n\n".join(block["text"] for block in parser_output if "text" in block)
+            print(f"Completed parsing {file.filename} in {time.time() - t0:.2f} seconds. Blocks created: {len(parser_output)}")
+        else:
+            extracted_text = "No text could be extracted from the PDF."
 
-        for i, doc_id in enumerate(doc_list):
-            doc_name = q.get_doc_fn(doc_id)
-            print(f"\nAnalyzing contract {i + 1}: {doc_name} ({doc_id})")
+        # Delete the processed PDF
+        os.remove(file_path)
+        print(f"Deleted file: {file.filename}")
 
-            # Use the input question directly
-            query_topic = question  # Use the provided question
-            llm_question = question
+        # Pass extracted text and query to Groq for processing
+        chat_completion = client.chat.completions.create(
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": f"Extracted text: {extracted_text}\n\nQuery: {query}"}
+            ],
+            model="llama3-8b-8192",
+            temperature=0.5,
+            max_tokens=1024,
+            top_p=1,
+            stop=None,
+            stream=False,
+        )
 
-            # Query the document using the topic
-            doc_filter = {"doc_ID": [doc_id]}
-            query_results = q.text_query_with_document_filter(query_topic, doc_filter, result_count=5, exact_mode=True)
+        # Extract the response from Groq
+        groq_response = chat_completion.choices[0].message.content
 
-            # Add source results to the prompt
-            source = prompter.add_source_query_results(query_results)
-
-            # Run the LLM with the query results as context
-            responses = prompter.prompt_with_source(llm_question, prompt_name="default_with_context", temperature=0.3)
-
-            # Collect responses
-            for r, response in enumerate(responses):
-                results.append({
-                    "question": llm_question,
-                    "response": re.sub("[\n]", " ", response["llm_response"]).strip()
-                })
-
-            prompter.clear_source_materials()
-
-        return JSONResponse(content={"results": results}, status_code=200)
+        # Return the extracted text and Groq's response
+        return JSONResponse(
+            content={
+                "filename": file.filename,
+                "extracted_text": extracted_text,
+                "query": query,
+                "groq_response": groq_response.replace("\n", "").replace("\t", "").replace('\"', ""),
+            },
+            status_code=200,
+        )
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to process PDF: {str(e)}")
+        # Handle errors during processing
+        raise HTTPException(status_code=500, detail=f"Error processing PDF: {str(e)}")
