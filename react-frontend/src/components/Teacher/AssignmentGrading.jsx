@@ -38,7 +38,7 @@ const AssignmentGrading = () => {
     try {
       // Send request to the server
       const response = await axios.post(
-        'https://a1e5-111-92-80-102.ngrok-free.app/correct-ai-assiagment/upload-and-process-pdf',
+        'https://5940-111-92-80-102.ngrok-free.app/correct-ai-assiagment/upload-and-process-pdf',
         formData,
         {
           headers: {

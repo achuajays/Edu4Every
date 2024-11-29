@@ -24,7 +24,7 @@ const CallFeaturePage = () => {
 
     try {
       const response = await axios.post(
-        'https://a1e5-111-92-80-102.ngrok-free.app/initiate-call/initiate-call',
+        'https://5940-111-92-80-102.ngrok-free.app/initiate-call/initiate-call',
         { number: phoneNumber },
         { headers: { accept: 'application/json', 'Content-Type': 'application/json' } }
       );
@@ -48,7 +48,7 @@ const CallFeaturePage = () => {
 
     try {
       const response = await axios.post(
-        'https://a1e5-111-92-80-102.ngrok-free.app/ai-learning-cource/generate-course',
+        'https://5940-111-92-80-102.ngrok-free.app/ai-learning-cource/generate-course',
         new URLSearchParams({ skill, level }),
         { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
       );

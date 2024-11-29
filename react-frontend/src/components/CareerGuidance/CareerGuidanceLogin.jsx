@@ -17,7 +17,7 @@ const CareerGuidanceLogin = () => {
     if (unique_id && password) {
       try {
         const response = await axios.post(
-          'https://a1e5-111-92-80-102.ngrok-free.app/carrier_guidance/login', 
+          'https://5940-111-92-80-102.ngrok-free.app/carrier_guidance/login', 
           {
             unique_id, 
             password

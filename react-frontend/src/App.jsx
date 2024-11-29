@@ -17,6 +17,7 @@ import VoiceRecordingComponent from './components/Teacher/VoiceRecordingComponen
 import CallAIPage from './components/CareerGuidance/CallAIPage';
 import AssignmentGrading from './components/Teacher/AssignmentGrading'
 import PdfFinder from './components/Student/PdfFinder';
+import AIMocktest from './components/CareerGuidance/AIMocktest';
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
           <Route path="/ai-phonecall-career" element={<CallAIPage />} />
           <Route path="/assignment" element={<AssignmentGrading/>} />
           <Route path="/pdf-qa" element={<PdfFinder />} />
+          <Route path="/mock-test" element={<AIMocktest />} />
         </Routes>
       </div>
     </Router>
