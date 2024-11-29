@@ -3,7 +3,6 @@ import axios from 'axios';
 import jsPDF from 'jspdf';
 
 const ResumeBuilderPage = () => {
-  // State to handle form data and generated resume
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,7 +19,6 @@ const ResumeBuilderPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
 
-  // Handle form field input change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -29,15 +27,14 @@ const ResumeBuilderPage = () => {
     }));
   };
 
-  // Handle form submission to send data to the backend
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setError(null); // Reset previous errors
+    setError(null);
 
     try {
       const response = await axios.post(
-        'https://5940-111-92-80-102.ngrok-free.app/process_carrier_guidance/process-guidance',
+        'https://a1e5-111-92-80-102.ngrok-free.app/process_carrier_guidance/process-guidance',
         JSON.stringify(formData),
         {
           headers: {
@@ -46,24 +43,21 @@ const ResumeBuilderPage = () => {
           }
         }
       );
-      setGeneratedResume(response.data.advice); // Display the generated resume
+      setGeneratedResume(response.data.advice);
     } catch (error) {
       console.error('Resume generation error:', error);
-      setError('Error generating resume. Please try again later.'); // Set error state for display
+      setError('Error generating resume. Please try again later.');
     } finally {
-      setIsSubmitting(false); // Enable button again after the submission
+      setIsSubmitting(false);
     }
   };
 
-  // Function to download the generated resume as a PDF
   const downloadPDF = () => {
     if (!generatedResume) return;
 
     const doc = new jsPDF();
     doc.setFontSize(12);
     doc.text("Generated Resume", 10, 10);
-    
-    // Split the resume into lines for better formatting in PDF
     const lines = generatedResume.split('\n');
     lines.forEach((line, index) => {
       doc.text(line, 10, 20 + (index * 10));
@@ -73,107 +67,100 @@ const ResumeBuilderPage = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 flex flex-col md:flex-row items-start justify-center">
-      {/* Resume Builder Form */}
-      <div className="bg-white shadow-xl rounded-xl p-6 w-full md:w-1/2">
-        <h1 className="text-3xl font-bold mb-6 text-gray-800">Resume Builder</h1>
-        
-        {/* Error Message Display */}
+    <div className="container mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between bg-gradient-to-r from-blue-500 to-purple-500">
+      <div className="bg-white shadow-2xl rounded-lg p-8 w-full md:w-1/2 lg:w-1/3 mx-auto">
+        <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Resume Builder</h1>
+
         {error && (
           <div className="bg-red-100 text-red-800 p-4 rounded-lg mb-4">
             <strong>Error:</strong> {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Full Name Input */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Full Name</label>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="flex flex-col">
+            <label className="text-lg font-medium text-gray-700">Full Name</label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your full name"
               required
             />
           </div>
 
-          {/* Email & Phone Inputs */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-gray-700 font-medium mb-2">Email</label>
+          <div className="grid grid-cols-2 gap-6">
+            <div className="flex flex-col">
+              <label className="text-lg font-medium text-gray-700">Email</label>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your email"
                 required
               />
             </div>
-            <div>
-              <label className="block text-gray-700 font-medium mb-2">Phone Number</label>
+            <div className="flex flex-col">
+              <label className="text-lg font-medium text-gray-700">Phone Number</label>
               <input
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your phone number"
               />
             </div>
           </div>
 
-          {/* Education & Degree Inputs */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-gray-700 font-medium mb-2">Education Level</label>
+          <div className="grid grid-cols-2 gap-6">
+            <div className="flex flex-col">
+              <label className="text-lg font-medium text-gray-700">Education Level</label>
               <select
                 name="education"
                 value={formData.education}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="high_school">High School</option>
                 <option value="bachelors">Bachelor's Degree</option>
                 <option value="masters">Master's Degree</option>
               </select>
             </div>
-            <div>
-              <label className="block text-gray-700 font-medium mb-2">Degree/Major</label>
+            <div className="flex flex-col">
+              <label className="text-lg font-medium text-gray-700">Degree/Major</label>
               <input
                 type="text"
                 name="degree"
                 value={formData.degree}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="e.g., Computer Science"
               />
             </div>
           </div>
 
-          {/* Skills, Experience, Projects, Job Title Inputs */}
           {['skills', 'experience', 'projects', 'job_title'].map((field, index) => (
-            <div key={index}>
-              <label className="block text-gray-700 font-medium mb-2">{field.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}</label>
+            <div key={index} className="flex flex-col">
+              <label className="text-lg font-medium text-gray-700">{field.replace(/_/g, ' ').toUpperCase()}</label>
               <textarea
                 name={field}
                 value={formData[field]}
                 onChange={handleInputChange}
                 rows={3}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder={`Describe your ${field.replace(/_/g, ' ')}`}
               ></textarea>
             </div>
           ))}
 
-          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-colors font-semibold"
+            className={`w-full py-3 rounded-lg text-white font-semibold ${isSubmitting ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'}`}
             disabled={isSubmitting}
           >
             {isSubmitting ? 'Generating...' : 'Generate Resume'}
@@ -181,16 +168,13 @@ const ResumeBuilderPage = () => {
         </form>
       </div>
 
-      {/* Display Generated Resume */}
       {generatedResume && (
-        <div className="bg-white shadow-xl rounded-xl p-6 w-full md:w-[40%] mt-6 md:mt-0 md:ml-[20px]">
-          <h2 className="text-xl font-bold mb-4 text-gray-800">Generated Resume</h2>
+        <div className="bg-white shadow-2xl rounded-lg p-8 w-full md:w-1/2 lg:w-1/3 mt-12 md:mt-0 mx-auto">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Generated Resume</h2>
           <pre className="bg-gray-100 p-4 rounded-lg overflow-x-auto">{generatedResume}</pre>
-          
-          {/* Download Button */}
-          <button 
-            onClick={downloadPDF} 
-            className="mt-4 w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition-colors" 
+          <button
+            onClick={downloadPDF}
+            className="mt-6 w-full py-3 rounded-lg bg-green-500 text-white font-semibold hover:bg-green-600"
           >
             Download Resume as PDF
           </button>
