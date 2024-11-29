@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import jsPDF from 'jspdf';
 
 const ResumeBuilderPage = () => {
   // State to handle form data and generated resume
@@ -54,8 +55,26 @@ const ResumeBuilderPage = () => {
     }
   };
 
+  // Function to download the generated resume as a PDF
+  const downloadPDF = () => {
+    if (!generatedResume) return;
+
+    const doc = new jsPDF();
+    doc.setFontSize(12);
+    doc.text("Generated Resume", 10, 10);
+    
+    // Split the resume into lines for better formatting in PDF
+    const lines = generatedResume.split('\n');
+    lines.forEach((line, index) => {
+      doc.text(line, 10, 20 + (index * 10));
+    });
+
+    doc.save('generated_resume.pdf');
+  };
+
   return (
-    <div className="container mx-auto px-4 py-8 flex items-center justify-center">
+    <div className="container mx-auto px-4 py-8 flex flex-col md:flex-row items-start justify-center">
+      {/* Resume Builder Form */}
       <div className="bg-white shadow-xl rounded-xl p-6 w-full md:w-1/2">
         <h1 className="text-3xl font-bold mb-6 text-gray-800">Resume Builder</h1>
         
@@ -137,53 +156,19 @@ const ResumeBuilderPage = () => {
           </div>
 
           {/* Skills, Experience, Projects, Job Title Inputs */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Skills</label>
-            <textarea
-              name="skills"
-              value={formData.skills}
-              onChange={handleInputChange}
-              rows={3}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="List your skills, separated by commas"
-            ></textarea>
-          </div>
-
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Work Experience</label>
-            <textarea
-              name="experience"
-              value={formData.experience}
-              onChange={handleInputChange}
-              rows={3}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Describe your work experience"
-            ></textarea>
-          </div>
-
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Projects</label>
-            <textarea
-              name="projects"
-              value={formData.projects}
-              onChange={handleInputChange}
-              rows={3}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Describe your projects"
-            ></textarea>
-          </div>
-
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">Applying Job</label>
-            <textarea
-              name="job_title"
-              value={formData.job_title}
-              onChange={handleInputChange}
-              rows={3}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter Job that you are Applying"
-            ></textarea>
-          </div>
+          {['skills', 'experience', 'projects', 'job_title'].map((field, index) => (
+            <div key={index}>
+              <label className="block text-gray-700 font-medium mb-2">{field.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}</label>
+              <textarea
+                name={field}
+                value={formData[field]}
+                onChange={handleInputChange}
+                rows={3}
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder={`Describe your ${field.replace(/_/g, ' ')}`}
+              ></textarea>
+            </div>
+          ))}
 
           {/* Submit Button */}
           <button
@@ -198,9 +183,17 @@ const ResumeBuilderPage = () => {
 
       {/* Display Generated Resume */}
       {generatedResume && (
-        <div className="bg-white shadow-xl rounded-xl p-6 w-full md:w-1/2 mt-6">
-          <h2 className="text-2xl font-bold mb-4 text-gray-800">Generated Resume</h2>
+        <div className="bg-white shadow-xl rounded-xl p-6 w-full md:w-[40%] mt-6 md:mt-0 md:ml-[20px]">
+          <h2 className="text-xl font-bold mb-4 text-gray-800">Generated Resume</h2>
           <pre className="bg-gray-100 p-4 rounded-lg overflow-x-auto">{generatedResume}</pre>
+          
+          {/* Download Button */}
+          <button 
+            onClick={downloadPDF} 
+            className="mt-4 w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition-colors" 
+          >
+            Download Resume as PDF
+          </button>
         </div>
       )}
     </div>
@@ -208,4 +201,3 @@ const ResumeBuilderPage = () => {
 };
 
 export default ResumeBuilderPage;
-
