@@ -179,7 +179,7 @@ const LandingPage = () => {
         </div>
         <div className="order-1 md:order-2 flex justify-center items-center">
           <img
-            src="https://img.freepik.com/premium-photo/virtual-neural-networks-artificial-intelligence-machine-learning-banner-wallpaper-made-with-generative-ai_155027-3423.jpg?w=1380"
+            src="https://www.theaiops.com/wp-content/uploads/2024/11/DALL%C2%B7E-2024-11-05-18.09.46-A-visually-engaging-banner-image-illustrating-the-theme-of-how-generative-AI-can-be-used-in-education.-The-background-features-a-bright-inspiring-cla-1024x585.webp"
             alt="Edu4Every: Personalized Learning Platform"
             className="w-full max-w-lg rounded-xl shadow-2xl"
             itemProp="image"

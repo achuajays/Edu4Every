@@ -33,21 +33,26 @@ async def generate_questions(
     """
     try:
         example_json = [
-            {"question1" : [
-                "option1",
-                "option2",
-                "option3",
-                "option4"
-                ]
-            },
-            {"question2": [
-                    "option1",
-                    "option2",
-                    "option3",
-                    "option4"
-                ]
-            }
+    {
+        "question": "How would you concatenate two strings in Python?",
+        "answers": [
+            "You would use the '+' operator to concatenate the two strings.",
+            "You would use the '=' operator to assign the second string to the first string.",
+            "You would use a loop to iterate over the characters of the second string and add them to the first string.",
+            "You would use a function to concatenate the two strings."
         ]
+    },
+    {
+        "question": "What is the purpose of the strip() method in Python?",
+        "answers": [
+            "To remove the first and last characters of a string.",
+            "To remove the first character of a string.",
+            "To remove the last character of a string.",
+            "To remove leading and trailing whitespace from a string."
+        ]
+    },
+
+]
         # Send the request to Groq LLM to generate questions with options
         chat_completion = client.chat.completions.create(
             messages=[
@@ -56,13 +61,14 @@ async def generate_questions(
                     "content": (
                         "You are an expert in creating interview questions. Generate a set of questions for a given job role and experience level. "
                         "For each question, provide four options as possible answers."
+                        "for each question and answer  remember to put double quotes before and after each option and question"
                     )
                 },
                 {
                     "role": "user",
                     "content": (f"""
                         Create 5 interview questions for the job role: '{job_role}' targeting candidates with '{experience}' experience. 
-                        Each question should have 4 options. Return the result as a JSON list in the format: {json.dumps(example_json)}  no other text along with it"""
+                        Remember to put double quotes before and after each option and question. Each question should have 4 options. Return the result as a JSON list in the format: {json.dumps(example_json)}  no other text along with it"""
 
                     )
                 }
@@ -77,7 +83,7 @@ async def generate_questions(
 
         # Extract the response
         questions_with_options = chat_completion.choices[0].message.content
-        data = questions_with_options.replace('\n', '').replace('\"', '')
+        data = questions_with_options.replace('\n', '').replace('\"', '').replace("  ","")
         print(data)
         # Return the questions and options as a JSON response
         return JSONResponse(
