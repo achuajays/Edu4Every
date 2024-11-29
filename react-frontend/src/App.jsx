@@ -1,79 +1,3 @@
-// import React from 'react';
-// import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-// import LandingPage from './components/LandingPage/LandingPage';
-// import StudentLogin from './components/Student/StudentLogin';
-// import TeacherLogin from './components/Teacher/TeacherLogin';
-// import StudentDashboard from './components/Student/StudentDashboard';
-// import TeacherDashboard from './components/Teacher/TeacherDashboard';
-// import CareerGuidanceDashboard from './components/CareerGuidance/CareerGuidancePage';
-// import CareerGuidanceLogin from './components/CareerGuidance/CareerGuidanceLogin'; // Added this import
-// import CallFeaturePage from './components/Student/CallFeaturePage';
-// import ResumeBuilderPage from './components/Student/ResumeBuilderPage';
-
-// function App() {
-//   return (
-//     <Router>
-//       <div className="min-h-screen bg-background">
-//         <Routes>
-//           {/* Public Routes */}
-//           <Route path="/" element={<LandingPage />} />
-          
-//           {/* Authentication Routes */}
-//           <Route path="/auth/student" element={<StudentLogin />} />
-//           <Route path="/auth/teacher" element={<TeacherLogin />} />
-//           <Route path="/auth/career-guidance" element={<CareerGuidanceLogin />} />
-          
-//           {/* Protected Dashboard Routes */}
-//           <Route
-//             path="/dashboard/student"
-//             element={
-//               <ProtectedRoute role="student">
-//                 <StudentDashboard />
-//               </ProtectedRoute>
-//             }
-//           />
-//           <Route
-//             path="/dashboard/teacher"
-//             element={
-//               <ProtectedRoute role="teacher">
-//                 <TeacherDashboard />
-//               </ProtectedRoute>
-//             }
-//           />
-//           <Route
-//             path="/dashboard/career-guidance"
-//             element={
-//               <ProtectedRoute role="career-guidance">
-//                 <CareerGuidanceDashboard />
-//               </ProtectedRoute>
-//             }
-//           />
-          
-//           {/* Feature Routes */}
-//           <Route path="/call-feature" element={<CallFeaturePage />} />
-//           <Route path="/resume-builder" element={<ResumeBuilderPage />} />
-//         </Routes>
-//       </div>
-//     </Router>
-//   );
-// }
-
-// // Simple Protected Route Component
-// const ProtectedRoute = ({ children, role }) => {
-//   // In a real app, check authentication status and role
-//   const isAuthenticated = localStorage.getItem('token') !== null;
-//   const userRole = localStorage.getItem('userRole');
-  
-//   if (!isAuthenticated || userRole !== role) {
-//     return <Navigate to="/" replace />;
-//   }
-  
-//   return children;
-// };
-
-// export default App;
-
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './components/LandingPage/LandingPage';
@@ -92,6 +16,7 @@ import JobRecommendations from './components/CareerGuidance/JobRecommendations';
 import VoiceRecordingComponent from './components/Teacher/VoiceRecordingComponent';
 import CallAIPage from './components/CareerGuidance/CallAIPage';
 import AssignmentGrading from './components/Teacher/AssignmentGrading'
+import PdfFinder from './components/Student/PdfFinder';
 
 function App() {
   return (
@@ -121,6 +46,7 @@ function App() {
           <Route path="/voice-recording" element={<VoiceRecordingComponent />} />
           <Route path="/ai-phonecall-career" element={<CallAIPage />} />
           <Route path="/assignment" element={<AssignmentGrading/>} />
+          <Route path="/pdf-qa" element={<PdfFinder />} />
         </Routes>
       </div>
     </Router>
