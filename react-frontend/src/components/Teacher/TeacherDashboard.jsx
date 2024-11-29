@@ -34,7 +34,7 @@ const TeacherDashboard = () => {
     {
         title: 'Telegram Chat Bot',
         description: 'Our Telegram chat bot can do anything: text generation, audio processing, and image explanation',
-        link: 'https://telegram.me/BotFather',
+        link: 'https://telegram.me/Edu4Every_bot',
         icon: MessageCircleIcon,
         color: 'bg-orange-100 text-orange-600'
     },
