@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { jsPDF } from 'jspdf';
-import { MicrophoneIcon, PauseIcon, StopIcon } from '@heroicons/react/24/solid';
+import { MicrophoneIcon, PauseIcon, StopIcon,SparklesIcon } from '@heroicons/react/24/solid';
 
 const VoiceRecordingComponent = () => {
     const [isRecording, setIsRecording] = useState(false);
@@ -184,8 +184,15 @@ const VoiceRecordingComponent = () => {
     };
     
     return (
-        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-xl rounded-lg p-6 w-1/2 max-w-4xl h-50 overflow-auto">
-            <h2 className="text-xl font-bold text-center mb-4 text-gray-700">Voice Recording</h2>
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-xl rounded-lg p-6 w-1/2 max-w-4xl h-500 overflow-auto">
+ <div className="text-center h-full" >
+                    <h1 className="text-3xl font-bold text-gray-800 flex items-center justify-center h-12">
+                        <SparklesIcon className="h-8 w-8 mr-3 text-purple-600" />
+                        Voice Insight
+                    </h1>
+                    <p className="text-gray-600 mt-2">Record, transcribe, and generate insights from your audio</p>
+                </div>
+
             
             <div className="flex justify-center items-center space-x-4">
                 <button onClick={startRecording} className={`bg-gray-300 text-gray-700 p-3 rounded-full hover:bg-gray-400 disabled:opacity-50 ${isRecording ? 'bg-green-500' : ''}`} disabled={isRecording && !isPaused}>
