@@ -33,7 +33,7 @@ const PdfFinder = () => {
 
     try {
       const response = await axios.post(
-        'https://5940-111-92-80-102.ngrok-free.app/rag/upload-and-process-pdf',
+        `${process.env.REACT_APP_API_URL}/rag/upload-and-process-pdf`,
         formData,
         {
           headers: {

@@ -22,7 +22,7 @@ const WritingAssistant = () => {
   const processText = async (textBeforePeriod) => {
     try {
       const response = await axios.post(
-        `https://5940-111-92-80-102.ngrok-free.app/writing_assistant/check-sentence`,
+        `${process.env.REACT_APP_API_URL}/writing_assistant/check-sentence`,
         null,
         {
           params: { sentence: textBeforePeriod },

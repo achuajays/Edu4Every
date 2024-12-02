@@ -17,7 +17,7 @@ const AIMocktest = () => {
     const fetchQuestions = async () => {
         try {
             setError(''); // Reset error state before making the request
-            const response = await fetch('https://5940-111-92-80-102.ngrok-free.app/ai-mock-test-genarate/generate-questions', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/ai-mock-test-genarate/generate-questions`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

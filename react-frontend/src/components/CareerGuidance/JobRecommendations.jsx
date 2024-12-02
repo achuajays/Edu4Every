@@ -36,7 +36,7 @@ const JobRecommendations = () => {
 
     try {
       const response = await axios.post(
-        'https://5940-111-92-80-102.ngrok-free.app/job_recommendation/recommend-jobs',
+        `${process.env.REACT_APP_API_URL}/job_recommendation/recommend-jobs`,
         payload,
         {
           headers: {

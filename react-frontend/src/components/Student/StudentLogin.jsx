@@ -14,7 +14,7 @@ const StudentLogin = () => {
     setError('');
 
     try {
-      const response = await axios.post('https://5940-111-92-80-102.ngrok-free.app/student/login', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/student/login`, {
         unique_id,
         password,
       });

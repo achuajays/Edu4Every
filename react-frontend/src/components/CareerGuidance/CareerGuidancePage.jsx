@@ -25,7 +25,7 @@ const CareerGuidancePage = () => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "https://5940-111-92-80-102.ngrok-free.app/ai-roadmap/career-roadmap",
+        `${process.env.REACT_APP_API_URL}/ai-roadmap/career-roadmap`,
         {
           currentEducation: formData.currentEducation,
           interestedFields: formData.interestedFields,

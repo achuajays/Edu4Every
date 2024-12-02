@@ -21,7 +21,7 @@ const CallAIPage = () => {
 
     try {
       const response = await axios.post(
-        'https://5940-111-92-80-102.ngrok-free.app/ai-roadmap/initiate-call',
+        `${process.env.REACT_APP_API_URL}/ai-roadmap/initiate-call`,
         {
           number: phoneNumber,
         },

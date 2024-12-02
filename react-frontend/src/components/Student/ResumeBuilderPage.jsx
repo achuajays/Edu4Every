@@ -34,7 +34,7 @@ const ResumeBuilderPage = () => {
 
     try {
       const response = await axios.post(
-        'https://a1e5-111-92-80-102.ngrok-free.app/process_carrier_guidance/process-guidance',
+        `${process.env.REACT_APP_API_URL}/process_carrier_guidance/process-guidance`,
         JSON.stringify(formData),
         {
           headers: {
